@@ -6,7 +6,8 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Person {
-    private static int id = 1000;
+    private static int nextId = new AtomicInteger(1000).getAndIncrement();
+    private int id;
     private String name;
     private Date dateOfBirth;
     private String gender;
@@ -17,8 +18,7 @@ public class Person {
 
 
     public Person(String name, Date dateOfBirth, String gender, String address, String phoneNumber, String email) {
-        this.id = Person.id;
-        Person.id++;
+        this.id = nextId++;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
@@ -96,14 +96,14 @@ public class Person {
     }
 
     class Notifications {
-        private final Integer notificationId = new AtomicInteger().getAndIncrement();
+        private final Integer notificationId = new AtomicInteger().getAndIncrement(); //todo implement notification Id's in recieved notifications
         private ArrayList<String> allMessages = new ArrayList<String>();
         private ArrayList<String> unreadMessages = new ArrayList<String>();
         private ArrayList<String> readMessages = new ArrayList<String>();
         private int unreadMessageCount;
 
         public Notifications() {
-            this.allMessages.add(String.valueOf(notificationId) + ": Welcome to the store, "+getName()+"!");
+            this.allMessages.add(String.valueOf(notificationId) + ": Welcome to the store, "+getName()+"!"+"\n");
             this.unreadMessages = this.allMessages;
             this.unreadMessageCount = 1;
         }
@@ -121,9 +121,9 @@ public class Person {
             this.unreadMessageCount = 0;
         }
         public void sendNotification(Person person, String message) {
-            String welcomeMessage = person.notifications.notificationId.toString() + ": " + message + "/";
-            person.notifications.unreadMessages.add(welcomeMessage);
-            person.notifications.allMessages.add(welcomeMessage);
+            person.notifications.unreadMessages.add(message+"\n");
+            person.notifications.unreadMessageCount++;
+            person.notifications.allMessages.add(message+"\n");
         }
 
         public void sendNotification(int personId, String message) {
@@ -148,6 +148,11 @@ public class Person {
         System.out.println(Emeka.getId());
         System.out.println(George.getId());
         System.out.println(Gaga.getId());
+
+        Emeka.notifications.sendNotification(George, "This is a test message");
+        George.notifications.viewUnreadNotifications();
+        George.notifications.viewAllMessages();
+        George.notifications.viewUnreadNotifications();
     }
 }
 
