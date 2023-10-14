@@ -1,32 +1,39 @@
 package Entities;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.concurrent.Flow;
+import Handlers.RecordsHandler;
+
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Person {
-    private int id;
+    private static int id = 1000;
     private String name;
     private Date dateOfBirth;
     private String gender;
     private String address;
     private String phoneNumber;
     private String email;
-    private Notifications Notifications;
+    private final Notifications notifications;
 
 
     public Person(String name, Date dateOfBirth, String gender, String address, String phoneNumber, String email) {
-        this.id = new AtomicInteger(1000).getAndIncrement();
+        this.id = Person.id;
+        Person.id++;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.email = email;
-        this.Notifications = new Notifications();
+        this.notifications = new Notifications();
+        RecordsHandler.addToPersonList(this);
     }
+
+    protected void finalize() throws Throwable {
+        RecordsHandler.removeFromPersonList(this);
+        super.finalize();
+    }
+
 
     public int getId() {
         return id;
@@ -89,38 +96,59 @@ public class Person {
     }
 
     class Notifications {
-        private int notificationId;
-        private List<String> contents;
-        private List<String> unread;
-        private List<String> read;
+        private final Integer notificationId = new AtomicInteger().getAndIncrement();
+        private ArrayList<String> allMessages = new ArrayList<String>();
+        private ArrayList<String> unreadMessages = new ArrayList<String>();
+        private ArrayList<String> readMessages = new ArrayList<String>();
+        private int unreadMessageCount;
+
         public Notifications() {
-            this.notificationId = new AtomicInteger().getAndIncrement();
-            this.contents = List.of(this.notificationId + " Welcome to the store!"+getName()+"!");
-            this.unread = this.contents;
-            this.read = List.of();
+            this.allMessages.add(String.valueOf(notificationId) + ": Welcome to the store, "+getName()+"!");
+            this.unreadMessages = this.allMessages;
+            this.unreadMessageCount = 1;
         }
-        public void viewAllContents() {
-            System.out.println(this.contents);
+        public void viewAllMessages() {
+            System.out.println(this.allMessages);
+
         }
         public void viewUnreadNotifications() {
-            System.out.println(this.unread);
+            System.out.println(this.unreadMessages);
             markAllAsRead();
         }
         public void markAllAsRead() {
-            this.read.addAll(this.unread);
-            this.contents.addAll(this.read);
-            this.unread.clear();
+            this.readMessages.addAll(this.unreadMessages);
+            this.unreadMessages.clear();
+            this.unreadMessageCount = 0;
         }
-        public void sendNotification(Person person, String content) {
-
-        }
-
-        public void sendNotification() {
-            sendNotification(null);
+        public void sendNotification(Person person, String message) {
+            String welcomeMessage = person.notifications.notificationId.toString() + ": " + message + "/";
+            person.notifications.unreadMessages.add(welcomeMessage);
+            person.notifications.allMessages.add(welcomeMessage);
         }
 
-        public void sendNotification(String content) {
+        public void sendNotification(int personId, String message) {
+            for (Person person: RecordsHandler.getpersonList()) {
+                if (person.getId() == personId) {
+                    sendNotification(person, message);
+                }
+                else System.out.println("Person does not exist.");
+            }
+        }
 
+        public void sendNotification(List<? extends Person> recipientList, String message) {
+            for (Person person : recipientList)  sendNotification(person, message);
         }
     }
+
+    public static void main(String[] args) {
+        Person Emeka = new Person("Emeka", new Date(), "Male", "123 Street", "1234567890", "john@example.com");
+        Person George = new Person("George", new Date(), "Male", "123 Street", "1234567890", "john@example.com");
+        Person Gaga = new Person("Gaga", new Date(), "Female", "123 Street", "1234567890", "john@example.com");
+
+        System.out.println(Emeka.getId());
+        System.out.println(George.getId());
+        System.out.println(Gaga.getId());
+    }
 }
+
+
