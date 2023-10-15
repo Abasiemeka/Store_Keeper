@@ -5,24 +5,12 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public final class Store {
-    private static ArrayList<String> inventory; //Product list
     private static BigDecimal accountBalance; //Store account balance in Naira.
     private static int receiptCount = 0; //Counter to keep track of receipts in lieu of ledger.
 
     static  {
-        inventory = new ArrayList<String>();
         accountBalance = BigDecimal.valueOf(100000.00);
         receiptCount = 0;
-    }
-
-    public static ArrayList<String> getInventory() { return inventory; }
-    public static void addToInventory(String productName) {
-        inventory.add(productName);
-        System.out.println(productName + " has been added to store inventory.");
-    }
-    public static void removeFromInventory(String productName) {
-        inventory.remove(productName);
-        System.out.println(productName + " has been removed from store inventory.");
     }
 
     public void setReceiptCount(int newReceiptCount) { receiptCount = newReceiptCount; }
