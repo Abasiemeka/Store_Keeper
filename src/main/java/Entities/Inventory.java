@@ -1,23 +1,23 @@
 package Entities;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public final class Inventory {
-    private static ArrayList<String> inventoryContents = new ArrayList<String>();
+    private static HashMap<Integer, Product> inventoryContents = new HashMap<Integer, Product>();
     private static String inventoryFileName = "C:\\Users\\Abasiemeka\\IdeaProjects\\Store_Keeper\\src\\main\\resources\\Inventory.xlsx";
 
-    public static ArrayList<String> getInventoryContents() {
+    public static HashMap<Integer, Product> getInventoryContents() {
         return inventoryContents;
     }
 
-    public static void addToInventory(String productName) {
-        inventoryContents.add(productName);
-        System.out.println(productName + " has been added to store inventory.");
+    public static void addToInventoryContents(Product product) {
+        inventoryContents.put(product.getProductID(), product);
+        System.out.println(product.getName() + " has been added to inventory contents list.");
     }
 
-    public static void removeFromInventory(String productName) {
-        inventoryContents.remove(productName);
-        System.out.println(productName + " has been removed from store inventory.");
+    public static void removeFromInventoryContents(Product product) {
+        inventoryContents.remove(product);
+        System.out.println(product.getName() + " has been removed from inventory contents list.");
     }
 
     public static void updateInventory() {

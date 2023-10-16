@@ -1,8 +1,11 @@
 package Entities;
 
 import java.math.BigDecimal;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Product {
+    private static AtomicInteger nextProductId = new AtomicInteger(1000);
+    private Integer productID;
     private String name;
     private BigDecimal price;
     private int quantity;
@@ -11,18 +14,24 @@ public class Product {
     private String manufacturer;
     private String description;
 
-    public Product(String name, BigDecimal price, int quantity) {
+    public Product(String name, BigDecimal price, int quantity, String size, String category, String manufacturer, String description) {
+        this.productID = nextProductId.getAndIncrement();
         this.name = name;
         this.price = price;
         this.quantity = quantity;
+        this.size = size;
+        this.category = category;
+        this.manufacturer = manufacturer;
+        this.description = description;
+        Inventory.addToInventoryContents(this);
     }
 
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
+    public Integer getProductID() { return productID; }
+
+    public Product getProductFromID(Integer productID) { return this; }
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
     public BigDecimal getPrice() {
         return price;

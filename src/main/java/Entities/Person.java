@@ -6,8 +6,8 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Person {
-    private static int nextId = new AtomicInteger(1000).getAndIncrement();
-    private int id;
+    private static AtomicInteger nextId = new AtomicInteger(1000);
+    private int personID;
     private String name;
     private Date dateOfBirth;
     private String gender;
@@ -18,7 +18,7 @@ public class Person {
 
 
     public Person(String name, Date dateOfBirth, String gender, String address, String phoneNumber, String email) {
-        this.id = nextId++;
+        this.personID = nextId.getAndIncrement();
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
@@ -34,12 +34,15 @@ public class Person {
         super.finalize();
     }
 
-
-    public int getId() {
-        return id;
+    public Person getPersonFromID(int personID) {
+        return this;
     }
-    public void setId(int id) {
-        this.id = id;
+
+    public int getPersonID() {
+        return personID;
+    }
+    public void setPersonID(int personID) {
+        this.personID = personID;
     }
     public String getName() {
         return name;
@@ -85,7 +88,7 @@ public class Person {
 
     public String toString() {
         return "Person{" +
-                "id=" + id +
+                "id=" + personID +
                 ", name='" + name + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
                 ", gender='" + gender + '\'' +
@@ -128,7 +131,7 @@ public class Person {
 
         public void sendNotification(int personId, String message) {
             for (Person person: RecordsHandler.getpersonList()) {
-                if (person.getId() == personId) {
+                if (person.getPersonID() == personId) {
                     sendNotification(person, message);
                 }
                 else System.out.println("Person does not exist.");
@@ -145,9 +148,9 @@ public class Person {
         Person George = new Person("George", new Date(), "Male", "123 Street", "1234567890", "john@example.com");
         Person Gaga = new Person("Gaga", new Date(), "Female", "123 Street", "1234567890", "john@example.com");
 
-        System.out.println(Emeka.getId());
-        System.out.println(George.getId());
-        System.out.println(Gaga.getId());
+        System.out.println(Emeka.getPersonID());
+        System.out.println(George.getPersonID());
+        System.out.println(Gaga.getPersonID());
 
         Emeka.notifications.sendNotification(George, "This is a test message");
         George.notifications.viewUnreadNotifications();
