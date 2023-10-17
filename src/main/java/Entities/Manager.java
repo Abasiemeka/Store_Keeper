@@ -1,13 +1,16 @@
 package Entities;
 
 import Enums.Designation;
+import Handlers.RecordsHandler;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
 public class Manager extends Employee {
-    public Manager(String name, Date dateOfBirth, String gender, String address, String phoneNumber, String email, Designation designation, BigDecimal salary) {
-        super(name, dateOfBirth, gender, address, phoneNumber, email, designation, salary);
+    public Manager(String name, Date dateOfBirth, String gender, String address, String phoneNumber, String email, BigDecimal salary) {
+        super(name, dateOfBirth, gender, address, phoneNumber, email, salary);
+        this.setDesignation(Designation.Manager);
+        RecordsHandler.addToManagerList(this);
     }
     @Override
     public String toString() {

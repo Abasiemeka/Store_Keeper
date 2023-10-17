@@ -20,8 +20,8 @@ public class Admin {
         employee = null;
         System.gc();
     }
-    public Employee hireEmployee(String name, Date dateOfBirth, String gender, String address, String phoneNumber, String email, Designation designation, BigDecimal salary) {
-        return new Employee(name, dateOfBirth, gender, address, phoneNumber, email, designation, salary);
+    public Employee hireEmployee(String name, Date dateOfBirth, String gender, String address, String phoneNumber, String email, BigDecimal salary) {
+        return new Employee(name, dateOfBirth, gender, address, phoneNumber, email, salary);
     }
     public void promoteEmployee() {
         System.out.println("Employee promoted.");

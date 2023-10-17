@@ -7,11 +7,11 @@ import java.util.List;
 
 public class RecordsHandler {
 
-    private static ArrayList<Person> personList = new ArrayList<>();
-    private static ArrayList<Employee> employeeList = new ArrayList<>();
-    private static ArrayList<Manager> managerList = new ArrayList<>();
-    private static ArrayList<Cashier> cashierList = new ArrayList<>();
-    private static ArrayList<Customer> customerList = new ArrayList<>();
+    private static List<Person> personList = new ArrayList<>();
+    private static List<Employee> employeeList = new ArrayList<>();
+    private static List<Manager> managerList = new ArrayList<>();
+    private static List<Cashier> cashierList = new ArrayList<>();
+    private static List<Customer> customerList = new ArrayList<>();
     public static void addToPersonList(Person person) {
         RecordsHandler.personList.add(person);
     }
@@ -20,7 +20,7 @@ public class RecordsHandler {
         personList.remove(person);
     }
 
-    public static List<Person> getpersonList() {
+    public static List<Person> getPersonList() {
         return personList;
     }
 

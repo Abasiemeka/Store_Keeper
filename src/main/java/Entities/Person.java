@@ -86,9 +86,10 @@ public class Person {
         this.gender = gender;
     }
 
+    @Override
     public String toString() {
         return "Person{" +
-                "id=" + personID +
+                "personID=" + personID +
                 ", name='" + name + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
                 ", gender='" + gender + '\'' +
@@ -110,37 +111,39 @@ public class Person {
             this.unreadMessages = this.allMessages;
             this.unreadMessageCount = 1;
         }
-        public void viewAllMessages() {
-            System.out.println(this.allMessages);
+    }
 
-        }
-        public void viewUnreadNotifications() {
-            System.out.println(this.unreadMessages);
-            markAllAsRead();
-        }
-        public void markAllAsRead() {
-            this.readMessages.addAll(this.unreadMessages);
-            this.unreadMessages.clear();
-            this.unreadMessageCount = 0;
-        }
-        public void sendNotification(Person person, String message) {
-            person.notifications.unreadMessages.add(message+"\n");
-            person.notifications.unreadMessageCount++;
-            person.notifications.allMessages.add(message+"\n");
-        }
 
-        public void sendNotification(int personId, String message) {
-            for (Person person: RecordsHandler.getpersonList()) {
-                if (person.getPersonID() == personId) {
-                    sendNotification(person, message);
-                }
-                else System.out.println("Person does not exist.");
+    public void viewAllMessages() {
+        System.out.println(notifications.allMessages);
+
+    }
+    public void viewUnreadNotifications() {
+        System.out.println(notifications.unreadMessages);
+        markAllAsRead();
+    }
+    public void markAllAsRead() {
+        notifications.readMessages.addAll(notifications.unreadMessages);
+        notifications.unreadMessages.clear();
+        notifications.unreadMessageCount = 0;
+    }
+    public void sendNotification(Person person, String message) {
+        person.notifications.unreadMessages.add(message+"\n");
+        person.notifications.unreadMessageCount++;
+        person.notifications.allMessages.add(message+"\n");
+    }
+
+    public void sendNotification(int personId, String message) {
+        for (Person person: RecordsHandler.getPersonList()) {
+            if (person.getPersonID() == personId) {
+                sendNotification(person, message);
             }
+            else System.out.println("Person does not exist.");
         }
+    }
 
-        public void sendNotification(List<? extends Person> recipientList, String message) {
-            for (Person person : recipientList)  sendNotification(person, message);
-        }
+    public void sendNotification(List<? extends Person> recipientList, String message) {
+        for (Person person : recipientList)  sendNotification(person, message);
     }
 
     public static void main(String[] args) {
@@ -152,10 +155,10 @@ public class Person {
         System.out.println(George.getPersonID());
         System.out.println(Gaga.getPersonID());
 
-        Emeka.notifications.sendNotification(George, "This is a test message");
-        George.notifications.viewUnreadNotifications();
-        George.notifications.viewAllMessages();
-        George.notifications.viewUnreadNotifications();
+        Emeka.sendNotification(George, "This is a test message");
+        George.viewUnreadNotifications();
+        George.viewAllMessages();
+        George.viewUnreadNotifications();
     }
 }
 

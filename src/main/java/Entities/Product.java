@@ -13,8 +13,9 @@ public class Product {
     private String category;
     private String manufacturer;
     private String description;
+    private String expiryDate;
 
-    public Product(String name, BigDecimal price, int quantity, String size, String category, String manufacturer, String description) {
+    public Product(String name, BigDecimal price, int quantity, String size, String category, String manufacturer, String description, String expiryDate) {
         this.productID = nextProductId.getAndIncrement();
         this.name = name;
         this.price = price;
@@ -23,8 +24,12 @@ public class Product {
         this.category = category;
         this.manufacturer = manufacturer;
         this.description = description;
-        Inventory.addToInventoryContents(this);
+        this.expiryDate = expiryDate;
+        Inventory.addToInventoryCache(this);
     }
+
+    public String getExpiryDate(){ return expiryDate;}
+
 
     public Integer getProductID() { return productID; }
 
