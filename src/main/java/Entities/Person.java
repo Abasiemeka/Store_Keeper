@@ -26,16 +26,12 @@ public class Person {
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.notifications = new Notifications();
-        RecordsHandler.addToPersonList(this);
+        RecordsHandler.addtoRecords(this);
     }
 
-    protected void finalize() throws Throwable {
-        RecordsHandler.removeFromPersonList(this);
+    public void finalize() throws Throwable {
+        RecordsHandler.removeFromRecords(this);
         super.finalize();
-    }
-
-    public Person getPersonFromID(int personID) {
-        return this;
     }
 
     public int getPersonID() {
@@ -144,21 +140,6 @@ public class Person {
 
     public void sendNotification(List<? extends Person> recipientList, String message) {
         for (Person person : recipientList)  sendNotification(person, message);
-    }
-
-    public static void main(String[] args) {
-        Person Emeka = new Person("Emeka", new Date(), "Male", "123 Street", "1234567890", "john@example.com");
-        Person George = new Person("George", new Date(), "Male", "123 Street", "1234567890", "john@example.com");
-        Person Gaga = new Person("Gaga", new Date(), "Female", "123 Street", "1234567890", "john@example.com");
-
-        System.out.println(Emeka.getPersonID());
-        System.out.println(George.getPersonID());
-        System.out.println(Gaga.getPersonID());
-
-        Emeka.sendNotification(George, "This is a test message");
-        George.viewUnreadNotifications();
-        George.viewAllMessages();
-        George.viewUnreadNotifications();
     }
 }
 

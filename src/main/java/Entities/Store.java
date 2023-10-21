@@ -35,8 +35,7 @@ public final class Store {
                 accountBalance = accountBalance.add(totalPrice);
                 incrementReceiptCount();
 
-                if (product.getQuantity() - quantity == 0) {
-                    inventory.remove(product.getName());
+                if (product.getQuantity() - quantity == 0 && Inventory.isAvailable(product)) {
                     System.out.println(product.getQuantity() + " units of " + product.getName() + " successfully sold at N" + discount + " discount");
                     System.out.println("Total sale: N" + totalPrice + ". " + product.getName() + " now out of stock: ");
                     System.out.println("Store records updated.");
@@ -61,9 +60,9 @@ public final class Store {
 //                }
             }
             case "stock" -> {
-                accountBalance = accountBalance.subtract(totalPrice);
-                incrementReceiptCount();
-                addToInventory(product.getName());
+                accountBalance = accountBalance.subtract(totalPrice); //Adjust account balance
+                incrementReceiptCount(); //Issue receipt
+                Inventory.addToInventoryCache(product);
                 System.out.println(product.getQuantity() + " units of " + product.getName() + " successfully sold at N" + discount + " discount");
                 System.out.println("Store records updated.");
             }

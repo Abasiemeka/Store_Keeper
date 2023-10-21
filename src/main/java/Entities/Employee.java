@@ -34,7 +34,7 @@ public class Employee extends Person {
         super(name, dateOfBirth, gender, address, phoneNumber, email);
         this.salary = salary;
         this.notifications = new Notifications();
-        RecordsHandler.addToEmployeeList(this);
+        RecordsHandler.addtoRecords(this);
     }
 
     public BigDecimal getSalary() {

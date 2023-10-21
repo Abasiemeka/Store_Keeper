@@ -33,8 +33,6 @@ public class Product {
 
     public Integer getProductID() { return productID; }
 
-    public Product getProductFromID(Integer productID) { return this; }
-
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 

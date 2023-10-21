@@ -1,10 +1,42 @@
 import Entities.Person;
+import Handlers.RecordsHandler;
 
 import javax.swing.*;
+import java.util.Date;
 
 public class Main {
-    public static void main(String[] args) {
-        /*TODO:
+    public static void main(String[] args) throws Throwable {
+
+        Person Emeka = new Person("Emeka", new Date(), "Male", "123 Street", "1234567890", "john@example.com");
+        Person George = new Person("George", new Date(), "Male", "123 Street", "1234567890", "john@example.com");
+        Person Gaga = new Person("Gaga", new Date(), "Female", "123 Street", "1234567890", "john@example.com");
+
+        System.out.println(Emeka.getPersonID());
+        System.out.println(George.getPersonID());
+        System.out.println(Gaga.getPersonID());
+
+        Emeka.sendNotification(George, "This is a test message");
+        George.viewUnreadNotifications();
+        George.viewAllMessages();
+        George.viewUnreadNotifications();
+
+        George.finalize();
+        George.viewAllMessages();
+
+        RecordsHandler.getPersonList().forEach(System.out::println);
+
+
+
+
+
+
+
+
+
+
+
+//----------------------------------------------------------------------------------------------------------------
+       /*TODO:
         Implement records handler such that every object sends itself to the relevant records list, upon instantiation
         Implement notifications, such that;
             every object can send and receive notifications
@@ -26,7 +58,5 @@ public class Main {
          *TODO
          */
 
-
-        JFileChooser
     }
 }
