@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public abstract class FileHandler {
     public static XSSFWorkbook createWorkbook(String pathname) throws FileNotFoundException, IOException {
@@ -18,7 +19,24 @@ public abstract class FileHandler {
         return arrayList;
     }
 
-    public static void arrayListToWorkbookRow(ArrayList<String> arrayList, XSSFWorkbook workbook, String sheetName, int rowNumber) throws FileNotFoundException, IOException {
-        arrayList.forEach(item -> {workbook.getSheet(sheetName).getRow(rowNumber).getCell(0).setCellValue(item);});
+    public static void writeHashSetToWorkbookRow(HashSet hashSet, XSSFWorkbook workbook, String sheetName, int rowNumber) throws FileNotFoundException, IOException {
+        hashSet.forEach(item -> {
+            switch (item.getClass().getTypeName()) {
+                case "java.lang.String":
+                    workbook.getSheet(sheetName).getRow(rowNumber).cellIterator().next().setCellValue((String) item);
+                    break;
+                case "java.lang.Integer":
+                    workbook.getSheet(sheetName).getRow(rowNumber).cellIterator().next().setCellValue((Integer) item);
+                    break;
+                case "java.lang.Double":
+                    workbook.getSheet(sheetName).getRow(rowNumber).cellIterator().next().setCellValue((Double) item);
+                    break;
+                case "java.lang.Boolean":
+                    workbook.getSheet(sheetName).getRow(rowNumber).cellIterator().next().setCellValue((Boolean) item);
+                    break;
+                    case "java.lang.Door":
+
+            }
+            workbook.getSheet(sheetName).getRow(rowNumber).cellIterator().next().setCellValue(item);});
     }
 }

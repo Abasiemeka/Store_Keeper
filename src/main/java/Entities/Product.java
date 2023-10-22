@@ -30,7 +30,6 @@ public class Product {
 
     public String getExpiryDate(){ return expiryDate;}
 
-
     public Integer getProductID() { return productID; }
 
     public String getName() { return name; }

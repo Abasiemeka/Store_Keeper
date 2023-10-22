@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RecordsHandler {
-
     private static List<Person> personList = new ArrayList<>();
     private static List<Employee> employeeList = new ArrayList<>();
     private static List<Manager> managerList = new ArrayList<>();

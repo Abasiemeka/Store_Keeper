@@ -2,8 +2,6 @@ package Entities;
 
 import Enums.Designation;
 import Handlers.RecordsHandler;
-
-import javax.management.ConstructorParameters;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -18,8 +16,14 @@ public class Manager extends Employee {
         return super.toString();
     }
 
-    public void creditAccount(BigDecimal amount) { Store.setAccountBalance(Store.getAccountBalance().add(amount)); }
-    public void debitAccount(BigDecimal amount) { Store.setAccountBalance(Store.getAccountBalance().subtract(amount)); }
+/*--------------------------------- Account Handling Methods --------------------------------------*/
+
+    public void creditAccount(BigDecimal amount) {
+        Store.setAccountBalance(Store.getAccountBalance().add(amount));
+    }
+    public void debitAccount(BigDecimal amount) {
+        Store.setAccountBalance(Store.getAccountBalance().subtract(amount));
+    }
 
     public void stockNewProduct(String name, BigDecimal price, int quantity, String size, String category, String manufacturer, String description, String expiryDate) {
         if (Inventory.getInventoryCache().contains(name)) {
@@ -31,7 +35,7 @@ public class Manager extends Employee {
             Store.transaction("stock", product, quantity, price);
         }
     }
-    public void deleteProduct(Product product) {
+    public void discontinueProduct(Product product) {
         if (product != null) {
             Inventory.removeFromInventoryCache(product);
             System.out.println(product.getName() + " is no longer available in stock");
@@ -40,6 +44,10 @@ public class Manager extends Employee {
         }
         else System.out.println("Product does not exist.");
     }
+
+
+/*--------------------------------- Product Handling Methods --------------------------------------*/
+
     public void hireCashier() {
     }
     public void fireCashier(Cashier cashier) {
